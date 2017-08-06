@@ -95,7 +95,14 @@ public class LineBotController
 
     private void getMessageData(String message, String targetID) throws IOException{
         if (message!=null){
-            pushMessage(targetID, message);
+            // pushMessage(targetID, message);
+
+            List<Message> msgArray=new ArrayList<>();
+            msgArray.add(new TextMessage("Malem Bosqu.."));
+            msgArray.add(new TextMessage("Lagi Sibuk nih sorry ya.."));
+            msgArray.add(new StickerMessage(1, 106));
+
+            replyToUser(targetID, )
         }
     }
 
@@ -130,6 +137,16 @@ public class LineBotController
             e.printStackTrace();
         }
     }
+
+    private void pushMessage(String sourceId, ArrayList<Message> msgArray) {
+        ReplyMessage replyMessage = new ReplyMessage(replyToken, msgArray);
+
+        LineMessagingServiceBuilder
+            .create(lChannelAccessToken)
+            .build()
+            .replyMessage(replyMessage)
+            .execute(); 
+}
 
     private void leaveGR(String id, String type){
         try {
