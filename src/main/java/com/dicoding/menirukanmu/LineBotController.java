@@ -102,7 +102,7 @@ public class LineBotController
             msgArray.add(new TextMessage("Lagi Sibuk nih sorry ya.."));
             msgArray.add(new StickerMessage(1, 106));
 
-            replyToUser(targetID, )
+            replyToUser(targetID, msgArray);
         }
     }
 
