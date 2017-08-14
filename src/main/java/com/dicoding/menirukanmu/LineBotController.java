@@ -6,6 +6,7 @@ import com.linecorp.bot.client.LineMessagingServiceBuilder;
 import com.linecorp.bot.client.LineSignatureValidator;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
+import com.linecorp.bot.model.message.StickerMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value="/linebot")
@@ -24,7 +27,7 @@ public class LineBotController
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
     String lChannelSecret;
-    
+
     @Autowired
     @Qualifier("com.linecorp.channel_access_token")
     String lChannelAccessToken;
@@ -70,7 +73,7 @@ public class LineBotController
                 replyToUser(payload.events[0].replyToken, "Unknown message");
             } else {
                 msgText = payload.events[0].message.text;
-                msgText = msgText.toLowerCase();
+                msgText = msgText.toLowerCase() + "-desu";
 
                 if (!msgText.contains("bot leave")){
                     try {
@@ -95,20 +98,22 @@ public class LineBotController
 
     private void getMessageData(String message, String targetID) throws IOException{
         if (message!=null){
-            // pushMessage(targetID, message);
+             pushMessage(targetID, message);
 
-            List<Message> msgArray=new ArrayList<>();
-            msgArray.add(new TextMessage("Malem Bosqu.."));
-            msgArray.add(new TextMessage("Lagi Sibuk nih sorry ya.."));
-            msgArray.add(new StickerMessage(1, 106));
-
-            replyToUser(targetID, msgArray);
+//            List<Message> msgArray = new ArrayList<>();
+//            msgArray.add(new TextMessage("Malem Bosqu.."));
+//            msgArray.add(new TextMessage("Lagi Sibuk nih sorry ya.."));
+//            msgArray.add(new StickerMessage(1, 106));
+//
+//            replyToUser(targetID, msgArray);
         }
     }
 
     private void replyToUser(String rToken, String messageToUser){
         TextMessage textMessage = new TextMessage(messageToUser);
+
         ReplyMessage replyMessage = new ReplyMessage(rToken, textMessage);
+
         try {
             Response<BotApiResponse> response = LineMessagingServiceBuilder
                 .create(lChannelAccessToken)
@@ -138,15 +143,15 @@ public class LineBotController
         }
     }
 
-    private void pushMessage(String sourceId, ArrayList<Message> msgArray) {
-        ReplyMessage replyMessage = new ReplyMessage(replyToken, msgArray);
-
-        LineMessagingServiceBuilder
-            .create(lChannelAccessToken)
-            .build()
-            .replyMessage(replyMessage)
-            .execute(); 
-}
+//    private void replyToUser(String rToken, List<Message> msgArray) throws IOException {
+//        ReplyMessage replyMessage = new ReplyMessage(rToken, msgArray);
+//
+//        LineMessagingServiceBuilder
+//                .create(lChannelAccessToken)
+//                .build()
+//                .replyMessage(replyMessage)
+//                .execute();
+//    }
 
     private void leaveGR(String id, String type){
         try {
