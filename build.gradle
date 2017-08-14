@@ -36,6 +36,10 @@ task (distclean, dependsOn: clean) <<
 	delete ".gradle"
 }
 
+tasks.withType(Jar) {
+	destinationDir = file("$rootDir")
+}
+
 configure(distclean)
 {
 	group = 'Build'
