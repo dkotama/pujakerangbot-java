@@ -105,8 +105,8 @@ public class LineBotController
 
     private void getMessageData(String message, String targetID) throws IOException{
         if (message!=null){
-//             pushMessage(targetID, message);
-              pushMessageArray(targetID);
+             pushMessage(targetID, message);
+//              pushMessageArray(targetID);
 //            List<Message> msgArray = new ArrayList<>();
 //            msgArray.add(new TextMessage("Malem Bosqu.."));
 //            msgArray.add(new TextMessage("Lagi Sibuk nih sorry ya.."));
