@@ -96,10 +96,17 @@ public class LineBotController
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
+    @RequestMapping(value="/pushmessage", method=RequestMethod.GET)
+    public void sendPushMessage(){
+        String userId  = "Uf150159f0d3d5e49ea30489361de1b2f";
+        String textMsg = "Ui kot, lagi apa?";
+        pushMessage(userId, textMsg);
+    }
+
     private void getMessageData(String message, String targetID) throws IOException{
         if (message!=null){
-             pushMessage(targetID, message);
-
+//             pushMessage(targetID, message);
+              pushMessageArray(targetID);
 //            List<Message> msgArray = new ArrayList<>();
 //            msgArray.add(new TextMessage("Malem Bosqu.."));
 //            msgArray.add(new TextMessage("Lagi Sibuk nih sorry ya.."));
@@ -130,6 +137,7 @@ public class LineBotController
     private void pushMessage(String sourceId, String txt){
         TextMessage textMessage = new TextMessage(txt);
         PushMessage pushMessage = new PushMessage(sourceId,textMessage);
+
         try {
             Response<BotApiResponse> response = LineMessagingServiceBuilder
             .create(lChannelAccessToken)
@@ -141,6 +149,21 @@ public class LineBotController
             System.out.println("Exception is raised ");
             e.printStackTrace();
         }
+    }
+
+    private void pushMessageArray(String sourceId){
+//        List<Message> msgArray = new ArrayList<>();
+//        msgArray.add(new TextMessage("hai"));
+//        msgArray.add(new TextMessage("how are you?"));
+//        msgArray.add(new StickerMessage("1", "106"));
+
+//        ReplyMessage replyMessage = new ReplyMessage(replyToken, msgArray);
+//
+//        LineMessagingServiceBuilder
+//                .create(ChannelAccessToken)
+//                .build()
+//                .replyMessage(replyMessage)
+//                .execute();
     }
 
 //    private void replyToUser(String rToken, List<Message> msgArray) throws IOException {
